@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background:         0 0% 100%;
+    --foreground:         222.2 84% 4.9%;
+    --card:               0 0% 100%;
+    --card-foreground:    222.2 84% 4.9%;
+    --popover:            0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary:            221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary:          210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted:              210 40% 96.1%;
+    --muted-foreground:   215.4 16.3% 46.9%;
+    --accent:             210 40% 96.1%;
+    --accent-foreground:  222.2 47.4% 11.2%;
+    --destructive:        0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border:             214.3 31.8% 91.4%;
+    --input:              214.3 31.8% 91.4%;
+    --ring:               221.2 83.2% 53.3%;
+    --radius:             0.65rem;
+    --sidebar-w:          260px;
+    --sidebar-w-collapsed: 68px;
+  }
+
+  .dark {
+    --background:         224 15% 8%;
+    --foreground:         210 40% 96%;
+    --card:               224 15% 11%;
+    --card-foreground:    210 40% 96%;
+    --popover:            224 15% 11%;
+    --popover-foreground: 210 40% 96%;
+    --primary:            217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary:          217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted:              217.2 32.6% 17.5%;
+    --muted-foreground:   215 20.2% 65.1%;
+    --accent:             217.2 32.6% 17.5%;
+    --accent-foreground:  210 40% 98%;
+    --destructive:        0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border:             217.2 32.6% 20%;
+    --input:              217.2 32.6% 20%;
+    --ring:               224.3 76.3% 55%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground antialiased; font-feature-settings: "rlig" 1, "calt" 1; }
+  html { scroll-behavior: smooth; }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { @apply bg-transparent; }
+::-webkit-scrollbar-thumb  { @apply bg-muted-foreground/30 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground/55; }
+
+/* ── Glassmorphism ───────────────────────────────────────── */
+.glass {
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  background: hsl(var(--card) / 0.72);
+  border: 1px solid hsl(var(--border) / 0.6);
+}
+.glass-strong {
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  backdrop-filter: blur(24px) saturate(200%);
+  background: hsl(var(--card) / 0.88);
+  border: 1px solid hsl(var(--border) / 0.8);
+}
+
+/* ── Gradient backgrounds ────────────────────────────────── */
+.gradient-brand {
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%);
+}
+
+.bg-animated-gradient {
+  background: linear-gradient(135deg, #020617, #0f172a, #1e293b);
+  background-size: 250% 250%;
+  animation: gradient-shift 20s ease-in-out infinite;
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+  33%       { transform: translateY(-20px) rotate(120deg); opacity: 0.4; }
+  66%       { transform: translateY(10px) rotate(240deg); opacity: 0.7; }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.3); }
+  50%       { box-shadow: 0 0 40px rgba(99,102,241,0.6), 0 0 80px rgba(59,130,246,0.3); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+@keyframes bounce-in {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float       { animation: float 6s ease-in-out infinite; }
+.animate-pulse-glow  { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-slide-up    { animation: slide-up 0.4s ease both; }
+.animate-slide-in    { animation: slide-in-right 0.35s ease both; }
+.animate-fade-in     { animation: fade-in 0.3s ease both; }
+.animate-bounce-in   { animation: bounce-in 0.45s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ── Skeleton shimmer ────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--muted-foreground)/0.12) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease infinite;
+  border-radius: 0.375rem;
+}
+
+/* ── Card hover lift ─────────────────────────────────────── */
+.card-hover {
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.card-hover:hover {
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+  border-color: hsl(var(--primary)/0.35);
+}
+
+/* ── Page transition ─────────────────────────────────────── */
+.page-enter { animation: slide-up 0.3s ease both; }
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sidebar-transition { transition: width 0.25s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── Input autofill dark fix ─────────────────────────────── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: hsl(var(--foreground));
+  -webkit-box-shadow: 0 0 0 1000px hsl(var(--background)) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ── Animation Delays ────────────────────────────────────── */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
