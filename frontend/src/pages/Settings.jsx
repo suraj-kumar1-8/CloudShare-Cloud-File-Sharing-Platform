@@ -4,18 +4,19 @@ import toast from 'react-hot-toast';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth }  from '../context/AuthContext';
 import { Button }   from '../components/ui/button';
+import GlassCard from '../components/GlassCard';
 
 function SectionCard({ icon: Icon, iconColor, title, children }) {
   return (
-    <div className="glass rounded-2xl p-6">
+    <GlassCard hover={false} className="p-6">
       <div className="mb-5 flex items-center gap-2">
-        <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${iconColor}`}>
-          <Icon size={16} className="text-white" />
+        <div className={`flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 ${iconColor || ''}`}>
+          <Icon size={16} className="text-primary" />
         </div>
         <h3 className="font-semibold">{title}</h3>
       </div>
       {children}
-    </div>
+    </GlassCard>
   );
 }
 
@@ -73,7 +74,7 @@ export default function Settings() {
       </div>
 
       {/* Appearance */}
-      <SectionCard icon={Palette} iconColor="bg-violet-500" title="Appearance">
+      <SectionCard icon={Palette} iconColor="" title="Appearance">
         <Toggle
           label="Dark mode"
           description="Switch between light and dark interface"
@@ -84,14 +85,14 @@ export default function Settings() {
           <button
             onClick={() => !isDark && toggleTheme()}
             className={`flex-1 rounded-xl border py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors
-              ${!isDark ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/40'}`}
+              ${!isDark ? 'border-primary/40 bg-primary/10 text-primary' : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20 hover:bg-white/10'}`}
           >
             <Sun size={14} /> Light
           </button>
           <button
             onClick={() => isDark && toggleTheme()}
             className={`flex-1 rounded-xl border py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors
-              ${isDark ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/40'}`}
+              ${isDark ? 'border-primary/40 bg-primary/10 text-primary' : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20 hover:bg-white/10'}`}
           >
             <Moon size={14} /> Dark
           </button>
@@ -99,7 +100,7 @@ export default function Settings() {
       </SectionCard>
 
       {/* Notifications */}
-      <SectionCard icon={Bell} iconColor="bg-amber-500" title="Notifications">
+      <SectionCard icon={Bell} iconColor="" title="Notifications">
         <div className="divide-y divide-border">
           <Toggle
             label="File uploads"
@@ -129,30 +130,30 @@ export default function Settings() {
       </SectionCard>
 
       {/* Security */}
-      <SectionCard icon={Shield} iconColor="bg-emerald-500" title="Security">
+      <SectionCard icon={Shield} iconColor="" title="Security">
         <div className="space-y-3 text-sm">
-          <div className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3">
+          <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
             <div>
               <p className="font-medium">Two-factor authentication</p>
               <p className="text-xs text-muted-foreground">Extra layer of account security</p>
             </div>
-            <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">Coming soon</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-white/60">Coming soon</span>
           </div>
-          <div className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3">
+          <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
             <div>
               <p className="font-medium">Active sessions</p>
               <p className="text-xs text-muted-foreground">Manage devices with access to your account</p>
             </div>
-            <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs text-muted-foreground">Coming soon</span>
+            <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-white/60">Coming soon</span>
           </div>
         </div>
       </SectionCard>
 
       {/* Sign out */}
-      <div className="glass rounded-2xl p-5 flex items-center justify-between">
+      <GlassCard hover={false} className="p-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
-            <LogOut size={15} className="text-muted-foreground" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+            <LogOut size={15} className="text-white/70" />
           </div>
           <div>
             <p className="font-medium text-sm">Sign out</p>
@@ -160,10 +161,10 @@ export default function Settings() {
           </div>
         </div>
         <Button variant="outline" size="sm" onClick={logout}>Sign out</Button>
-      </div>
+      </GlassCard>
 
       {/* Danger zone */}
-      <div className="glass rounded-2xl p-6 border border-destructive/30">
+      <GlassCard hover={false} className="p-6 border border-destructive/30">
         <div className="mb-4 flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-destructive/10">
             <AlertTriangle size={16} className="text-destructive" />
@@ -175,7 +176,7 @@ export default function Settings() {
         </p>
         <div className="space-y-3">
           <input
-            className="w-full rounded-xl border border-destructive/40 bg-background px-3 py-2 text-sm outline-none focus:border-destructive focus:ring-2 focus:ring-destructive/20"
+            className="w-full rounded-2xl border border-destructive/40 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none backdrop-blur-xl focus:border-destructive focus:ring-2 focus:ring-destructive/20"
             placeholder='Type "DELETE" to confirm'
             value={deleteInput}
             onChange={(e) => setDeleteInput(e.target.value)}
@@ -191,7 +192,7 @@ export default function Settings() {
             {deleting ? 'Deleting…' : 'Delete my account permanently'}
           </Button>
         </div>
-      </div>
+      </GlassCard>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import DropzoneUpload  from '../components/DropzoneUpload';
 import { Button }      from '../components/ui/button';
 import { Progress }    from '../components/ui/progress';
 import {
-  Card, CardContent, CardHeader, CardTitle, CardDescription,
+  Card, CardContent,
 } from '../components/ui/card';
 
 // Upload status enum
@@ -89,13 +89,13 @@ export default function UploadFile() {
 
       {/* Folder context banner */}
       {folderId && (
-        <Card className="border-yellow-200 bg-yellow-50">
-          <CardContent className="flex items-center gap-3 p-3 text-yellow-800">
-            <Folder size={18} className="shrink-0 text-yellow-600" />
+        <Card className="border-primary/20 bg-white/5">
+          <CardContent className="flex items-center gap-3 p-3 text-white/85">
+            <Folder size={18} className="shrink-0 text-primary" />
             <span className="text-sm flex-1">
               Uploading into: <strong>{folderName ?? '…'}</strong>
             </span>
-            <Button asChild variant="ghost" size="sm" className="text-yellow-700 hover:text-yellow-900">
+            <Button asChild variant="ghost" size="sm" className="text-white/70 hover:text-white">
               <Link to={`/folders/${folderId}`}>
                 <ArrowLeft size={14} className="mr-1" />
                 Back to folder
@@ -139,7 +139,7 @@ export default function UploadFile() {
 
           <div className="space-y-2">
             {queue.map((item) => (
-              <Card key={item.id} className="border-border/60 bg-card/70 backdrop-blur">
+              <Card key={item.id} className="border-white/10 bg-white/5">
                 <CardContent className="flex items-center gap-4 p-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/60">
                     <FileText size={20} className="text-primary" />

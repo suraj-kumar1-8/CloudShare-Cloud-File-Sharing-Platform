@@ -35,3 +35,14 @@ Thumbs.db
 
 # Coverage
 coverage/
+
+# Runtime / generated data (do not commit)
+mongodb-data/
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Tooling caches
+.vite/
+
+# Legacy/duplicate workspace folder (safety)
+cloud-file-sharing/

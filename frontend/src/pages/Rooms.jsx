@@ -3,11 +3,13 @@ import { PlusCircle, Inbox }  from 'lucide-react';
 import toast                  from 'react-hot-toast';
 import * as roomsAPI          from '../api/rooms';
 import { Button }             from '../components/ui/button';
-import { Card, CardContent }  from '../components/ui/card';
+import { CardContent }        from '../components/ui/card';
 import { Input }              from '../components/ui/input';
 import { Label }              from '../components/ui/label';
 import RoomCard               from '../components/RoomCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import GlassCard              from '../components/GlassCard';
+import GradientButton         from '../components/GradientButton';
 
 const EXPIRY_OPTIONS = [
   { label: '1 hour',   value: '1h'  },
@@ -74,10 +76,10 @@ export default function Rooms() {
             Create temporary rooms to share files with others. Rooms auto-delete on expiry.
           </p>
         </div>
-        <Button onClick={() => setShowCreate(!showCreate)}>
+        <GradientButton onClick={() => setShowCreate(!showCreate)}>
           <PlusCircle size={16} className="mr-2" />
           New Room
-        </Button>
+        </GradientButton>
       </div>
 
       {/* Create form */}
@@ -89,7 +91,7 @@ export default function Rooms() {
           exit={{ opacity: 0, height: 0, y: -20 }}
           className="overflow-hidden"
         >
-        <Card className="glass border-white/20 dark:border-white/10 mb-4">
+        <GlassCard hover={false} className="mb-4">
           <CardContent className="space-y-4 p-5">
             <h3 className="font-semibold">Create a new room</h3>
 
@@ -125,13 +127,13 @@ export default function Rooms() {
             </div>
 
             <div className="flex gap-2">
-              <Button onClick={handleCreate} disabled={creating}>
+              <GradientButton onClick={handleCreate} disabled={creating}>
                 {creating ? 'Creating…' : 'Create Room'}
-              </Button>
+              </GradientButton>
               <Button variant="outline" onClick={() => setShowCreate(false)}>Cancel</Button>
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
         </motion.div>
       )}
       </AnimatePresence>
@@ -144,19 +146,19 @@ export default function Rooms() {
       )}
 
       {!loading && rooms.length === 0 && (
-        <Card>
+        <GlassCard hover={false}>
           <CardContent className="flex flex-col items-center justify-center gap-3 py-16 text-center">
             <Inbox size={48} className="text-muted-foreground/30" />
             <p className="font-medium">No rooms yet</p>
             <p className="text-sm text-muted-foreground">
               Create a room to share a collection of files with a single link.
             </p>
-            <Button onClick={() => setShowCreate(true)}>
+            <GradientButton onClick={() => setShowCreate(true)}>
               <PlusCircle size={15} className="mr-2" />
               Create your first room
-            </Button>
+            </GradientButton>
           </CardContent>
-        </Card>
+        </GlassCard>
       )}
 
       {!loading && rooms.length > 0 && (

@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { User, Mail, Lock, Camera, Shield, Files, HardDrive, Calendar } from 'lucide-react';
+import { User, Lock, Camera, Shield, Files, HardDrive, Calendar } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { getProfile, updateProfile, changePassword, uploadAvatar } from '../api/profile';
 import { formatBytes, timeAgo } from '../lib/utils';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../context/AuthContext';
+import GlassCard from '../components/GlassCard';
+import GradientButton from '../components/GradientButton';
+import InputField from '../components/InputField';
 
 export default function Profile() {
-  const { user: authUser, setUser } = useAuth();
+  const { setUser } = useAuth();
   const fileRef = useRef(null);
 
   const [profile, setProfile]       = useState(null);
@@ -104,7 +107,7 @@ export default function Profile() {
   return (
     <div className="space-y-6 animate-fade-in max-w-4xl">
       {/* ── Header card ──────────────────────────────────────────────── */}
-      <div className="glass rounded-2xl p-6 shadow-[0_0_12px_2px_var(--tw-shadow-color)] shadow-primary/20">
+      <GlassCard hover={false} className="p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
           {/* Avatar */}
           <div className="relative">
@@ -152,7 +155,7 @@ export default function Profile() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + idx * 0.08, type: 'spring', stiffness: 300, damping: 30 }}
                 whileHover={{ scale: 1.07, boxShadow: '0 0 12px 2px var(--tw-shadow-color)' }}
-                className="flex flex-col items-center rounded-xl bg-muted/50 px-4 py-2 text-center min-w-[80px] border-2 border-primary/20 shadow-[0_0_8px_2px_var(--tw-shadow-color)] shadow-primary/10 animate-glow"
+                className="flex flex-col items-center rounded-2xl bg-white/5 px-4 py-2 text-center min-w-[90px] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.25)]"
               >
                 <Icon size={16} className={color + ' drop-shadow-glow'} />
                 <p className="mt-1 font-bold text-sm text-shadow-glow">{value}</p>
@@ -161,93 +164,83 @@ export default function Profile() {
             ))}
           </div>
         </div>
-      </div>
+      </GlassCard>
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* ── Edit profile ──────────────────────────────────────────── */}
-        <div className="glass rounded-2xl p-6">
+        <GlassCard hover={false} className="p-6">
           <div className="mb-5 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10">
-              <User size={16} className="text-indigo-500" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <User size={16} className="text-primary" />
             </div>
             <h3 className="font-semibold">Edit Profile</h3>
           </div>
           <form onSubmit={handleSave} className="space-y-4">
-            <div>
-              <label className="mb-1.5 block text-sm font-medium">Full name</label>
-              <input
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                value={form.name}
-                onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                required
-                minLength={2}
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm font-medium">Email</label>
-              <input
-                type="email"
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                value={form.email}
-                onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                required
-              />
-            </div>
-            <Button type="submit" disabled={saving} className="w-full">
+            <InputField
+              label="Full name"
+              value={form.name}
+              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+              required
+              minLength={2}
+              placeholder="Your name"
+            />
+            <InputField
+              label="Email"
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+              required
+              placeholder="you@company.com"
+            />
+            <GradientButton type="submit" disabled={saving} className="w-full">
               {saving ? 'Saving…' : 'Save changes'}
-            </Button>
+            </GradientButton>
           </form>
-        </div>
+        </GlassCard>
 
         {/* ── Change password ──────────────────────────────────────── */}
-        <div className="glass rounded-2xl p-6">
+        <GlassCard hover={false} className="p-6">
           <div className="mb-5 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-500/10">
-              <Lock size={16} className="text-rose-500" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+              <Lock size={16} className="text-primary" />
             </div>
             <h3 className="font-semibold">Change Password</h3>
           </div>
           <form onSubmit={handlePassword} className="space-y-4">
-            <div>
-              <label className="mb-1.5 block text-sm font-medium">Current password</label>
-              <input
-                type="password"
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                value={pwForm.current}
-                onChange={(e) => setPwForm((p) => ({ ...p, current: e.target.value }))}
-                required
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm font-medium">New password</label>
-              <input
-                type="password"
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                value={pwForm.next}
-                onChange={(e) => setPwForm((p) => ({ ...p, next: e.target.value }))}
-                required
-                minLength={6}
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm font-medium">Confirm new password</label>
-              <input
-                type="password"
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                value={pwForm.confirm}
-                onChange={(e) => setPwForm((p) => ({ ...p, confirm: e.target.value }))}
-                required
-              />
-            </div>
+            <InputField
+              label="Current password"
+              type="password"
+              value={pwForm.current}
+              onChange={(e) => setPwForm((p) => ({ ...p, current: e.target.value }))}
+              required
+              placeholder="••••••••"
+            />
+            <InputField
+              label="New password"
+              type="password"
+              value={pwForm.next}
+              onChange={(e) => setPwForm((p) => ({ ...p, next: e.target.value }))}
+              required
+              minLength={6}
+              placeholder="At least 6 characters"
+            />
+            <InputField
+              label="Confirm new password"
+              type="password"
+              value={pwForm.confirm}
+              onChange={(e) => setPwForm((p) => ({ ...p, confirm: e.target.value }))}
+              required
+              placeholder="Repeat new password"
+            />
             <Button type="submit" disabled={pwSaving} variant="destructive" className="w-full">
               {pwSaving ? 'Updating…' : 'Update password'}
             </Button>
           </form>
-        </div>
+        </GlassCard>
       </div>
 
       {/* ── Security note ──────────────────────────────────────────────── */}
-      <div className="glass rounded-2xl p-4 flex items-start gap-3 border border-amber-500/20">
+      <GlassCard hover={false} className="p-4 flex items-start gap-3 border border-amber-500/20">
         <Shield size={18} className="text-amber-500 mt-0.5 flex-shrink-0" />
         <div>
           <p className="text-sm font-medium">Account security</p>
@@ -256,7 +249,7 @@ export default function Profile() {
             Use a strong password and keep your email updated.
           </p>
         </div>
-      </div>
+      </GlassCard>
     </div>
   );
 }

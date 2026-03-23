@@ -7,7 +7,7 @@ import toast              from 'react-hot-toast';
 import { cn, formatBytes, timeAgo, fileTypeColor, formatExpiry, isExpired } from '../lib/utils';
 import { Badge }          from './ui/badge';
 import { Button }         from './ui/button';
-import { Card, CardContent } from './ui/card';
+import GlassCard          from './GlassCard';
 import { motion } from 'framer-motion';
 import ShareLinkModal       from './ShareLinkModal';
 import PreviewModal         from './PreviewModal';
@@ -185,11 +185,11 @@ export default function FileCard({ file, onDelete, onDownload }) {
     />
     <Tilt glareEnable={true} glareMaxOpacity={0.45} scale={1.04} tiltMaxAngleX={12} tiltMaxAngleY={12} className="w-full">
       <motion.div 
-        whileHover={{ y: -4, scale: 1.01 }}
+        whileHover={{ y: -4 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Card className="group transition-shadow hover:shadow-lg glass border-white/20 dark:border-white/10 dark:bg-black/40">
-          <CardContent className="flex items-start gap-4 p-4">
+        <GlassCard className="group">
+          <div className="flex items-start gap-4 p-4">
             {/* File type icon */}
             <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-accent">
               <FileIcon mimeType={file.fileType} />
@@ -305,8 +305,8 @@ export default function FileCard({ file, onDelete, onDownload }) {
                 </motion.div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       </motion.div>
     </Tilt>
 

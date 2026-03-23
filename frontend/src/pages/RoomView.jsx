@@ -11,9 +11,11 @@ import * as roomsAPI        from '../api/rooms';
 import { formatBytes, timeAgo } from '../lib/utils';
 import { Button }           from '../components/ui/button';
 import { Progress }         from '../components/ui/progress';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge }            from '../components/ui/badge';
+import { Input }            from '../components/ui/input';
 import { cn }               from '../lib/utils';
+import GlassCard            from '../components/GlassCard';
 
 function MimeIcon({ mimeType, size = 20 }) {
   if (!mimeType)                    return <File size={size} className="text-blue-500" />;
@@ -174,22 +176,26 @@ export default function RoomView() {
 
   if (expired) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
-        <span className="text-5xl">⌛</span>
-        <h2 className="text-2xl font-bold">Room Expired</h2>
-        <p className="text-muted-foreground">This room and all its files have been automatically deleted.</p>
-        <Button asChild variant="outline"><Link to="/rooms">← Back to rooms</Link></Button>
-      </div>
+      <GlassCard hover={false} className="mx-auto max-w-xl p-10 text-center">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <span className="text-5xl">⌛</span>
+          <h2 className="text-2xl font-bold">Room Expired</h2>
+          <p className="text-muted-foreground">This room and all its files have been automatically deleted.</p>
+          <Button asChild variant="outline"><Link to="/rooms">← Back to rooms</Link></Button>
+        </div>
+      </GlassCard>
     );
   }
 
   if (!room) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
-        <span className="text-5xl">❓</span>
-        <h2 className="text-2xl font-bold">Room not found</h2>
-        <Button asChild variant="outline"><Link to="/rooms">← Back to rooms</Link></Button>
-      </div>
+      <GlassCard hover={false} className="mx-auto max-w-xl p-10 text-center">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <span className="text-5xl">❓</span>
+          <h2 className="text-2xl font-bold">Room not found</h2>
+          <Button asChild variant="outline"><Link to="/rooms">← Back to rooms</Link></Button>
+        </div>
+      </GlassCard>
     );
   }
 
@@ -217,7 +223,7 @@ export default function RoomView() {
       </Button>
 
       {/* Room header */}
-      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4">
+      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/10 pb-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{room.roomName}</h1>
           <p className="text-sm text-muted-foreground">
@@ -229,7 +235,7 @@ export default function RoomView() {
           <Badge
             variant="outline"
             className={cn(
-              'flex items-center gap-1 rounded-full border-gray-700 bg-background/60 px-3 py-1 text-xs',
+              'flex items-center gap-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl px-3 py-1 text-xs',
               (isExpired || deadlinePassed) ? 'text-red-400' : 'text-indigo-300',
             )}
           >
@@ -239,7 +245,7 @@ export default function RoomView() {
           <Button
             size="sm"
             variant="outline"
-            className="rounded-full border-gray-700 bg-background/60 px-3 text-xs font-medium"
+            className="rounded-full border-white/10 bg-white/5 px-3 text-xs font-medium"
             onClick={copyLink}
           >
             <Copy size={13} className="mr-1.5" />
@@ -249,7 +255,7 @@ export default function RoomView() {
       </div>
 
       {/* Room overview */}
-      <Card className="border border-gray-800 bg-card/60 shadow-md">
+      <GlassCard hover={false}>
         <CardHeader className="pb-1">
           <CardTitle className="text-sm font-semibold tracking-wide">Room overview</CardTitle>
         </CardHeader>
@@ -284,11 +290,11 @@ export default function RoomView() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </GlassCard>
 
       {/* Sender name + upload area */}
       {!isExpired && (
-        <Card className="border border-gray-800 bg-card/60 shadow-md max-w-3xl mx-auto">
+        <GlassCard hover={false} className="max-w-3xl mx-auto">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-semibold tracking-wide">Send files to this room</CardTitle>
           </CardHeader>
@@ -297,10 +303,9 @@ export default function RoomView() {
               <label className="text-xs font-medium text-muted-foreground sm:w-40" htmlFor="student-name">
                 Your name
               </label>
-              <input
+              <Input
                 id="student-name"
                 type="text"
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
                 placeholder="e.g. Alex Johnson"
                 value={studentName}
                 onChange={(e) => setStudentName(e.target.value)}
@@ -310,8 +315,8 @@ export default function RoomView() {
             <div
               {...getRootProps()}
               className={cn(
-                'flex min-h-[200px] max-w-xl mx-auto cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-700 bg-background/40 text-center transition-colors',
-                isDragActive ? 'border-primary bg-primary/10' : 'hover:border-primary/70 hover:bg-accent/20',
+                'flex min-h-[200px] max-w-xl mx-auto cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/10 bg-white/5 text-center transition-colors backdrop-blur-xl',
+                isDragActive ? 'border-primary/70 bg-primary/10' : 'hover:border-white/20 hover:bg-white/10',
               )}
             >
               <input {...getInputProps()} />
@@ -342,7 +347,7 @@ export default function RoomView() {
                   />
                   <label
                     htmlFor="room-folder-input"
-                    className="cursor-pointer rounded-full border border-gray-700 bg-background/60 px-3 py-1 text-[11px] font-medium hover:border-primary/70 hover:text-primary"
+                    className="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-white/80 hover:border-white/20 hover:text-white"
                   >
                     Import folder
                   </label>
@@ -361,7 +366,7 @@ export default function RoomView() {
                   />
                   <label
                     htmlFor="room-zip-input"
-                    className="cursor-pointer rounded-full border border-gray-700 bg-background/60 px-3 py-1 text-[11px] font-medium hover:border-primary/70 hover:text-primary"
+                    className="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-white/80 hover:border-white/20 hover:text-white"
                   >
                     Upload ZIP
                   </label>
@@ -369,12 +374,12 @@ export default function RoomView() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
       )}
 
       {/* Upload queue */}
       {queue.length > 0 && (
-        <Card className="border border-gray-800 bg-card/60 shadow-md">
+        <GlassCard hover={false}>
           <CardHeader className="pb-2 pt-4 px-4">
             <CardTitle className="text-sm font-semibold">Upload queue</CardTitle>
           </CardHeader>
@@ -410,11 +415,11 @@ export default function RoomView() {
               Clear completed
             </Button>
           </CardContent>
-        </Card>
+        </GlassCard>
       )}
 
       {/* Files in room */}
-      <Card className="border border-gray-800 bg-card/60 shadow-md">
+      <GlassCard hover={false}>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-semibold">Files in this room ({room.files?.length ?? 0})</CardTitle>
         </CardHeader>
@@ -427,7 +432,7 @@ export default function RoomView() {
 
           <div className="mt-2 space-y-2">
             {room.files?.map((f, idx) => (
-              <Card key={f.fileId ?? idx} className="overflow-hidden border border-gray-800 bg-background/60">
+              <GlassCard key={f.fileId ?? idx} hover={false} className="overflow-hidden rounded-2xl">
                 <CardContent className="flex items-center gap-3 p-3">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/60">
                     <MimeIcon mimeType={f.fileType} />
@@ -451,21 +456,21 @@ export default function RoomView() {
                     <a href={f.fileUrl} target="_blank" rel="noreferrer">Download</a>
                   </Button>
                 </CardContent>
-              </Card>
+              </GlassCard>
             ))}
           </div>
         </CardContent>
-      </Card>
+      </GlassCard>
 
       {/* Submissions analytics + table */}
       {!loadingSubs && (
-        <Card className="border border-gray-800 bg-card/60 shadow-md">
+        <GlassCard hover={false}>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold">Submissions ({submissions.length})</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             {stats && (
-              <div className="grid gap-4 border-b border-border/80 bg-muted/5 px-4 py-3 text-xs sm:grid-cols-3 sm:text-sm">
+              <div className="grid gap-4 border-b border-white/10 bg-white/5 px-4 py-3 text-xs sm:grid-cols-3 sm:text-sm">
                 <div>
                   <p className="text-muted-foreground">Total submissions</p>
                   <p className="font-semibold">{stats.totalSubmissions ?? 0}</p>
@@ -490,7 +495,7 @@ export default function RoomView() {
             ) : (
               <div className="overflow-x-auto rounded-b-xl">
                 <table className="min-w-full text-sm">
-                  <thead className="bg-muted/60">
+                  <thead className="bg-white/5">
                     <tr className="text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       <th className="px-3 py-2">Student</th>
                       <th className="px-3 py-2">File</th>
@@ -582,7 +587,7 @@ export default function RoomView() {
               </div>
             )}
           </CardContent>
-        </Card>
+        </GlassCard>
       )}
     </div>
   );

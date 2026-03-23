@@ -1,10 +1,11 @@
 import { Clock, Files, Trash2, ExternalLink } from 'lucide-react';
 import { Link }          from 'react-router-dom';
 import { cn }            from '../lib/utils';
-import { Card, CardContent } from './ui/card';
+import { CardContent } from './ui/card';
 import { Button }        from './ui/button';
 import { Badge }         from './ui/badge';
 import { motion }        from 'framer-motion';
+import GlassCard         from './GlassCard';
 
 /**
  * RoomCard — displays a single room in the Rooms list.
@@ -29,10 +30,13 @@ export default function RoomCard({ room, onDelete }) {
 
   return (
     <motion.div whileHover={!isExpired ? { y: -4, scale: 1.02 } : {}}>
-    <Card className={cn('glass transition-shadow hover:shadow-lg border-white/20 dark:border-white/10 dark:bg-black/40', isExpired && 'opacity-60 grayscale')}>
+    <GlassCard
+      hover={false}
+      className={cn('transition-shadow hover:shadow-lg', isExpired && 'opacity-60 grayscale')}
+    >
       <CardContent className="flex items-start gap-4 p-4">
         {/* Room icon */}
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-2xl">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-2xl">
           🗂️
         </div>
 
@@ -52,16 +56,16 @@ export default function RoomCard({ room, onDelete }) {
             <Badge
               variant="outline"
               className={cn(
-                'text-xs flex items-center gap-1',
+                'text-xs flex items-center gap-1 border-white/10 bg-white/5 text-white/80',
                 isExpired
-                  ? 'border-red-300 bg-red-50 text-red-600'
-                  : 'border-indigo-300 bg-indigo-50 text-indigo-700'
+                  ? 'border-red-500/30 bg-red-500/10 text-red-300'
+                  : 'border-primary/25 bg-primary/10 text-primary/90'
               )}
             >
               <Clock size={10} />
               {timeLeft()}
             </Badge>
-            <Badge variant="outline" className="text-xs flex items-center gap-1">
+            <Badge variant="outline" className="text-xs flex items-center gap-1 border-white/10 bg-white/5 text-white/80">
               <Files size={10} />
               {room.fileCount ?? room.files?.length ?? 0} file(s)
             </Badge>
@@ -86,7 +90,7 @@ export default function RoomCard({ room, onDelete }) {
           </Button>
         </div>
       </CardContent>
-    </Card>
+    </GlassCard>
     </motion.div>
   );
 }

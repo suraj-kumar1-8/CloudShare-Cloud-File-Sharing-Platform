@@ -4,7 +4,7 @@ import { Folder, Trash2, Pencil, FolderOpen, Files } from 'lucide-react';
 import toast           from 'react-hot-toast';
 import { cn }          from '../lib/utils';
 import { Button }      from './ui/button';
-import { Card, CardContent } from './ui/card';
+import GlassCard       from './GlassCard';
 
 /**
  * FolderCard – displays a folder with child/file counts.
@@ -54,17 +54,17 @@ export default function FolderCard({ folder, onDelete, onRename }) {
   };
 
   return (
-    <Card
+    <GlassCard
       className={cn(
-        'group cursor-pointer transition-shadow hover:shadow-md select-none',
+        'group cursor-pointer select-none',
         loading && 'opacity-50 pointer-events-none'
       )}
       onClick={handleOpen}
     >
-      <CardContent className="flex items-center gap-3 p-4">
+      <div className="flex items-center gap-3 p-4">
         {/* Folder icon */}
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-yellow-50">
-          <Folder size={22} className="text-yellow-500" />
+        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+          <Folder size={22} className="text-amber-300 drop-shadow-glow" />
         </div>
 
         {/* Name + counts */}
@@ -80,7 +80,7 @@ export default function FolderCard({ folder, onDelete, onRename }) {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 onBlur={() => setEditing(false)}
-                className="flex-1 rounded border border-input bg-background px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none backdrop-blur-xl focus:border-blue-400/60 focus:ring-2 focus:ring-blue-500/25"
               />
             </form>
           ) : (
@@ -129,7 +129,7 @@ export default function FolderCard({ folder, onDelete, onRename }) {
             <Trash2 size={14} />
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </GlassCard>
   );
 }

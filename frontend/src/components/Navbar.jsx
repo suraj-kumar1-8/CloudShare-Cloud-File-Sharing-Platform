@@ -1,6 +1,7 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect, useRef }    from 'react';
-import { Bell, Sun, Moon, Search, X }     from 'lucide-react';
+import { motion }                         from 'framer-motion';
+import { Bell, Sun, Moon, Search, X, CloudLightning } from 'lucide-react';
 import { useAuth }                        from '../context/AuthContext';
 import { useTheme }                       from '../contexts/ThemeContext';
 import { getNotifications, markAllRead }  from '../api/notifications';
@@ -26,7 +27,59 @@ const NOTIF_ICONS = {
   file_expiring:     '⏰',
 };
 
-export default function Navbar() {
+export default function Navbar({ variant = 'app' }) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  if (variant === 'marketing') {
+    return (
+      <header
+        className={cn(
+          'sticky top-0 z-50 border-b backdrop-blur-xl',
+          scrolled
+            ? 'bg-slate-950/55 border-white/10 shadow-[0_10px_40px_-26px_rgba(0,0,0,0.9)]'
+            : 'bg-slate-950/35 border-white/5'
+        )}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="flex items-center justify-center h-10 w-10 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 shadow-[0_0_22px_hsl(var(--primary)/0.22)]">
+              <CloudLightning size={22} className="text-white" />
+            </div>
+            <span className="text-lg font-semibold text-white">CloudShare</span>
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-8 text-sm">
+            <a href="#top" className="text-white/80 hover:text-white transition-colors duration-300">Product</a>
+            <a href="#features" className="text-white/80 hover:text-white transition-colors duration-300">Features</a>
+            <Link to="/pricing" className="text-white/80 hover:text-white transition-colors duration-300">Pricing</Link>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Link
+              to="/login"
+              className="px-4 py-2 rounded-2xl text-white/85 border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:shadow-[0_0_18px_rgba(255,255,255,0.08)]"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="px-4 py-2 rounded-2xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 transition-all duration-300 hover:shadow-[0_0_40px_hsl(var(--primary)/0.35)]"
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   const { pathname }      = useLocation();
   const navigate          = useNavigate();
   const { user }          = useAuth();
@@ -69,7 +122,13 @@ export default function Navbar() {
   };
 
   return (
-    <header className="flex h-16 items-center gap-4 border-b bg-glass backdrop-blur-lg px-4 md:px-6 shrink-0 shadow-[0_0_12px_2px_var(--tw-shadow-color)] shadow-primary/20">
+    <header
+      className={cn(
+        'sticky top-0 z-40 flex h-16 items-center gap-4 border-b px-4 md:px-6 shrink-0 backdrop-blur-xl',
+        'bg-glass shadow-[0_10px_40px_-26px_rgba(0,0,0,0.9)]',
+        scrolled ? 'border-white/10' : 'border-white/5'
+      )}
+    >
       {/* Page title */}
       <h1 className="hidden text-lg font-semibold md:block mr-2 shrink-0 text-shadow-glow">
         {TITLES[pathname] ?? 'CloudShare'}

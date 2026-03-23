@@ -7,7 +7,7 @@ import * as filesAPI                    from '../api/files';
 import FileCard                         from '../components/FileCard';
 import { Input }                        from '../components/ui/input';
 import { Button }                       from '../components/ui/button';
-import { Card, CardContent }            from '../components/ui/card';
+import GlassCard                        from '../components/GlassCard';
 
 const SORT_OPTIONS = [
   { value: 'newest',   label: 'Newest first'  },
@@ -129,7 +129,7 @@ export default function MyFiles() {
             placeholder="Search files…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 border-primary/30 shadow-[0_0_8px_2px_var(--tw-shadow-color)] shadow-primary/10 animate-glow"
+            className="pl-9"
           />
         </motion.div>
         <div className="flex items-center gap-3">
@@ -138,7 +138,7 @@ export default function MyFiles() {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="h-10 rounded-md border border-primary/20 bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-[0_0_8px_2px_var(--tw-shadow-color)] shadow-primary/10 animate-glow"
+              className="h-10 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white/85 backdrop-blur-xl outline-none transition-all duration-300 focus:border-blue-400/60 focus:ring-2 focus:ring-blue-500/25"
             >
               {SORT_OPTIONS.map((o) => (
                 <option key={o.value} value={o.value}>{o.label}</option>
@@ -179,8 +179,8 @@ export default function MyFiles() {
 
       {/* Empty state */}
       {!loading && files.length === 0 && (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center gap-3 py-20 text-center">
+        <GlassCard>
+          <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
             <Files size={48} className="text-primary/40 drop-shadow-glow animate-bounce" />
             <p className="text-lg font-medium text-shadow-glow">No files yet</p>
             <p className="text-sm text-muted-foreground">Start by uploading your first file</p>
@@ -189,20 +189,20 @@ export default function MyFiles() {
                 <Link to="/upload">Upload a file</Link>
               </Button>
             </motion.div>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       )}
 
       {/* No search results */}
       {!loading && files.length > 0 && filtered.length === 0 && (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center gap-2 py-16 text-center">
+        <GlassCard>
+          <div className="flex flex-col items-center justify-center gap-2 py-16 text-center">
             <p className="font-medium text-shadow-glow">No files match &quot;{search}&quot;</p>
             <motion.div whileTap={{ scale: 0.95 }}>
               <Button variant="ghost" size="sm" onClick={() => setSearch('')} className="animate-glow">Clear search</Button>
             </motion.div>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       )}
 
       {/* File grid / list */}

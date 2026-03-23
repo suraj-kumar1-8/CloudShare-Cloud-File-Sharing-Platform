@@ -66,9 +66,9 @@ export default function Sidebar({ collapsed, onCollapse }) {
             className={({ isActive }) =>
               cn(
                 'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ease-out border border-transparent',
-                'text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-100',
-                'hover:bg-gray-200 dark:hover:bg-gray-800 hover:shadow-[0_0_12px_rgba(129,140,248,0.45)]',
-                isActive && 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 shadow-[0_0_16px_rgba(129,140,248,0.7)] border-indigo-400',
+                'text-muted-foreground hover:text-foreground',
+                'hover:bg-accent/70 hover:shadow-[0_0_18px_hsl(var(--primary)/0.12)]',
+                isActive && 'bg-primary/10 text-foreground border-primary/30 shadow-[0_0_22px_hsl(var(--primary)/0.18)]',
                 collapsed && 'justify-center px-2',
               )
             }
@@ -80,8 +80,8 @@ export default function Sidebar({ collapsed, onCollapse }) {
                   className={cn(
                     'shrink-0 transition-transform duration-200',
                     isActive
-                      ? 'text-indigo-400 dark:text-indigo-500'
-                      : 'text-gray-500 dark:text-gray-400 group-hover:text-indigo-500 group-hover:scale-110'
+                      ? 'text-primary drop-shadow-glow'
+                      : 'text-muted-foreground group-hover:text-primary/90 group-hover:scale-110'
                   )}
                 />
                 {!collapsed && (

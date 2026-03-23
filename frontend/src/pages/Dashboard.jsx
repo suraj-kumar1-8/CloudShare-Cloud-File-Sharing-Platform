@@ -20,6 +20,7 @@ import CreateFolderModal                   from '../components/CreateFolderModal
 import StorageBar                          from '../components/StorageBar';
 import Hero3D                              from '../components/Hero3D';
 import { useAuth }                         from '../context/AuthContext';
+import GlassCard                            from '../components/GlassCard';
 
 // ── Activity Feed Item ────────────────────────────────────────────────────────
 function ActivityItem({ item }) {
@@ -205,8 +206,9 @@ export default function Dashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 p-6 text-white shadow-lg"
+        className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 text-white shadow-[0_18px_60px_-40px_rgba(0,0,0,0.85)]"
       >
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/25 via-purple-500/20 to-sky-500/20" />
         <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
         <div className="absolute -bottom-8 right-20 h-36 w-36 rounded-full bg-white/10 blur-xl" />
         <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -303,8 +305,9 @@ export default function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               whileHover={{ y: -5, scale: 1.04 }}
-              className={`glass card-hover rounded-2xl p-5 border border-white/5 shadow-[0_18px_45px_rgba(15,23,42,0.9)] bg-slate-950/60 backdrop-blur-xl ${bg}`}
+              className="w-full"
             >
+              <GlassCard className={`rounded-2xl p-5 ${bg}`}>
               <motion.div
                 className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${grad} animate-pulse-glow`}
                 animate={{ rotate: [0, 15, -15, 0] }}
@@ -324,13 +327,14 @@ export default function Dashboard() {
                 ) : statValues[key]}
               </p>
               <p className="mt-0.5 text-sm text-muted-foreground">{label}</p>
+              </GlassCard>
             </motion.div>
           </Tilt>
         ))}
       </div>
 
       {/* ── Storage bar ────────────────────────────────────────────────── */}
-      <div className="glass rounded-2xl p-5">
+      <GlassCard className="rounded-2xl p-5" hover={false}>
         <div className="mb-3 flex items-center justify-between">
           <span className="font-semibold text-sm flex items-center gap-1.5">
             <HardDrive size={15} className="text-primary" /> Storage Overview
@@ -338,7 +342,7 @@ export default function Dashboard() {
           <Link to="/settings" className="text-xs text-primary hover:underline">Manage</Link>
         </div>
         <StorageBar />
-      </div>
+      </GlassCard>
 
       {/* ── Folders ────────────────────────────────────────────────────── */}
       <div>
@@ -364,13 +368,13 @@ export default function Dashboard() {
         )}
 
         {!loading && recentFolders.length === 0 && (
-          <div className="glass rounded-2xl flex flex-col items-center justify-center gap-3 py-10 text-center">
+          <GlassCard className="rounded-2xl flex flex-col items-center justify-center gap-3 py-10 text-center" hover={false}>
             <Folder size={36} className="text-muted-foreground/40" />
             <p className="text-sm font-medium">No folders yet</p>
             <Button variant="outline" size="sm" onClick={() => setModalOpen(true)}>
               Create your first folder
             </Button>
-          </div>
+          </GlassCard>
         )}
 
         {!loading && recentFolders.length > 0 && (
@@ -413,14 +417,14 @@ export default function Dashboard() {
         )}
 
         {!loading && recentFiles.length === 0 && (
-          <div className="glass rounded-2xl flex flex-col items-center justify-center gap-3 py-16 text-center">
+          <GlassCard className="rounded-2xl flex flex-col items-center justify-center gap-3 py-16 text-center" hover={false}>
             <Files size={48} className="text-muted-foreground/40" />
             <p className="font-medium">No files uploaded yet</p>
             <p className="text-sm text-muted-foreground">Upload your first file to get started</p>
             <Button asChild className="mt-2">
               <Link to="/upload">Upload a file</Link>
             </Button>
-          </div>
+          </GlassCard>
         )}
 
         {!loading && recentFiles.length > 0 && (
@@ -440,7 +444,7 @@ export default function Dashboard() {
       {/* ── Recent activity + My rooms ─────────────────────────────────── */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Recent activity: mixed files & folders */}
-        <div className="glass rounded-2xl p-5">
+        <GlassCard className="rounded-2xl p-5" hover={false}>
           <div className="mb-3 flex items-center justify-between">
             <h3 className="flex items-center gap-2 text-lg font-semibold">
               <Activity size={16} />
@@ -460,10 +464,10 @@ export default function Dashboard() {
               </AnimatePresence>
             </div>
           )}
-        </div>
+        </GlassCard>
 
         {/* My rooms */}
-        <div className="glass rounded-2xl p-5">
+        <GlassCard className="rounded-2xl p-5" hover={false}>
           <div className="mb-3 flex items-center justify-between">
             <h3 className="flex items-center gap-2 text-lg font-semibold">
               <Users size={16} />
@@ -487,12 +491,12 @@ export default function Dashboard() {
               ))}
             </div>
           )}
-        </div>
+        </GlassCard>
       </div>
 
       {/* Quick CTA */}
       {!loading && recentFiles.length > 0 && (
-        <div className="glass rounded-2xl overflow-hidden">
+        <GlassCard className="rounded-2xl overflow-hidden" hover={false}>
           <div className="bg-gradient-to-r from-indigo-500/10 via-violet-500/10 to-cyan-500/10 p-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border border-primary/10">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
@@ -507,7 +511,7 @@ export default function Dashboard() {
               <Link to="/shared">View shared <ArrowRight size={13} className="ml-1" /></Link>
             </Button>
           </div>
-        </div>
+        </GlassCard>
       )}
 
       <CreateFolderModal

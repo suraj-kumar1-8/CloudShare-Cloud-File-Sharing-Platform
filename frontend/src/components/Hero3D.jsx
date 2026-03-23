@@ -4,10 +4,10 @@ import { useRef } from 'react';
 
 function FloatingShape({ color, position, scale }) {
   return (
-    <Float speed={1.2} rotationIntensity={1.2} floatIntensity={2}>
+    <Float speed={1.6} rotationIntensity={0.9} floatIntensity={2.4}>
       <mesh position={position} scale={scale} castShadow receiveShadow>
         <icosahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.65} roughness={0.2} metalness={0.1} />
       </mesh>
     </Float>
   );
@@ -19,7 +19,7 @@ export default function Hero3D() {
       <Canvas shadows camera={{ position: [0, 0, 8], fov: 50 }}>
         <ambientLight intensity={0.7} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.7} />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.45} />
         <FloatingShape color="#a855f7" position={[-2, 0, 0]} scale={1.2} />
         <FloatingShape color="#06b6d4" position={[2, 1, 0]} scale={1.1} />
         <FloatingShape color="#f472b6" position={[0, -1.5, 0]} scale={1.3} />

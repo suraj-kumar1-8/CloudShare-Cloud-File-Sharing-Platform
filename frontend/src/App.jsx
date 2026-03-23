@@ -17,6 +17,9 @@ import Analytics      from './pages/Analytics';
 import Settings       from './pages/Settings';
 import Shared         from './pages/Shared';
 import Landing        from './pages/Landing';
+import Pricing        from './pages/Pricing';
+import Privacy        from './pages/Privacy';
+import Terms          from './pages/Terms';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout         from './components/Layout';
 
@@ -37,6 +40,9 @@ export default function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/help" element={<Help />} />
 
